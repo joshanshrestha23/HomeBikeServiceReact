@@ -12,7 +12,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
   cancelBookingApi,
   deleteBookingApi,
-  initializeKhaltiPaymentApi,
   userBookingApi,
 } from '../../api/api';
 
@@ -47,25 +46,30 @@ const Bookings = () => {
   };
 
   const handlePayment = async (totalPrice) => {
-    try {
-      const paymentResponse = await initializeKhaltiPaymentApi({
-        bookings: bookings,
-        totalPrice,
-        website_url: window.location.origin,
-      });
-      if (paymentResponse.data.success) {
-        const paymentUrl = paymentResponse.data.payment.payment_url;
-        window.location.href = paymentUrl;
-      } else {
-        toast.error('Failed to initialize payment. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error processing payment:', error);
-      toast.error(
-        'Error processing payment: ' +
-          (error.response?.data?.message || error.message || 'Unknown error'),
-      );
-    }
+    //   try {
+    //     console.log(bookings);
+    //     const paymentResponse = await initializeKhaltiPaymentApi({
+    //       bookings: bookings,
+    //       totalPrice,
+    //       website_url: window.location.origin,
+    //     });
+    //     if (paymentResponse.data.success) {
+    //       const paymentUrl = paymentResponse.data.payment.payment_url;
+    //       window.location.href = paymentUrl;
+    //     } else {
+    //       const paymentUrl = paymentResponse.data.payment.payment_url;
+    //       window.location.href = paymentUrl;
+    //       // toast.error('Failed to initialize payment. Please try again.');
+    //     }
+    //   } catch (error) {
+    //     console.error('Error processing payment:', error);
+    //     toast.error(
+    //       'Error processing payment: ' +
+    //         (error.response?.data?.message || error.message || 'Unknown error'),
+    //     );
+    //   }
+
+    window.location.href = 'http://localhost:3000/thankyou';
   };
 
   const handleCancelBooking = (bookingId) => {
@@ -271,7 +275,7 @@ const Bookings = () => {
           <button
             onClick={() => handlePayment(calculateTotal())}
             className='ml-4 px-6 py-3 bg-green-600 text-white font-bold rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
-            Proceed to Payment
+            Proceed to Confirm Booking
           </button>
         </div>
       </div>

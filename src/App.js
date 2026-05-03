@@ -23,7 +23,6 @@ import BookNow from './pages/bookNow/BookNow';
 import Bookings from './pages/bookings/Bookings';
 import ChooseModel from './pages/chooseModel/chooseModel';
 import ConfirmBooking from './pages/confirmBooking/ConfirmBooking';
-import ConfirmPayment from './pages/confirmPayment/ConfirmPayment';
 import ContactUs from './pages/contactUs/ContactUs';
 import Homepage from './pages/dashboard/Homepage';
 import Login from './pages/login/login';
@@ -101,10 +100,6 @@ function App() {
           <Route
             path='/search'
             element={<Search />}
-          />
-          <Route
-            path='/confirmPayment'
-            element={<ConfirmPayment />}
           />
           <Route
             path='/user/chat/:id'
