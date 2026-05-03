@@ -1,12 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-  FaComments,
-  FaEnvelope,
-  FaPhone,
-  FaSearch,
-  FaUserCircle,
-} from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { FaEnvelope, FaPhone, FaSearch, FaUserCircle } from 'react-icons/fa';
 import { getAllUsersApi } from '../../../api/api';
 
 const CustomerDashboard = () => {
@@ -19,7 +12,7 @@ const CustomerDashboard = () => {
     setLoading(true);
     getAllUsersApi()
       .then((res) => {
-        if (res.status === 201) {
+        if (res.data.success) {
           setUsers(res.data.users);
         }
         setLoading(false);
@@ -39,7 +32,7 @@ const CustomerDashboard = () => {
     (user) =>
       user.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.phoneNumber.includes(searchTerm)
+      user.phoneNumber.includes(searchTerm),
   );
 
   return (
@@ -75,7 +68,7 @@ const CustomerDashboard = () => {
                   <th className='py-3 px-4 text-left'>User Name</th>
                   <th className='py-3 px-4 text-left'>User Email</th>
                   <th className='py-3 px-4 text-left'>User Phone</th>
-                  <th className='py-3 px-4 text-left'>Action</th>
+                  {/* <th className='py-3 px-4 text-left'>Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -100,14 +93,14 @@ const CustomerDashboard = () => {
                         {user.phoneNumber}
                       </div>
                     </td>
-                    <td className='py-3 px-4'>
+                    {/* <td className='py-3 px-4'>
                       <Link
                         to={`/admin/chat/${user.userId}`}
                         className='bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300 flex items-center justify-center'>
                         <FaComments className='mr-2' />
                         Chat
                       </Link>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

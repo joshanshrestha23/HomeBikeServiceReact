@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
   cancelBookingApi,
   deleteBookingApi,
+  updateBookingStatusApi,
   userBookingApi,
 } from '../../api/api';
 
@@ -68,6 +69,24 @@ const Bookings = () => {
     //         (error.response?.data?.message || error.message || 'Unknown error'),
     //     );
     //   }
+    // updateBookingStatusApi
+
+    const res = await updateBookingStatusApi(bookings._id, {
+      status: 'paid',
+    });
+
+    if (res.status === 200) {
+      toast.success('Booking paid successfully');
+    } else {
+      toast.error('Failed to pay booking');
+    }
+    setBookings((prevBookings) =>
+      prevBookings.map((booking) =>
+        booking._id === bookings._id ? { ...booking, status: 'paid' } : booking,
+      ),
+    );
+
+    console.log(bookings);
 
     window.location.href = 'http://localhost:3000/thankyou';
   };

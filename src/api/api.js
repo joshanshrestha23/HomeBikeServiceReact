@@ -100,6 +100,9 @@ export const deleteBookingApi = (id) => Api.delete(`/api/booking/delete/${id}`);
 export const userBookingApi = (id) =>
   Api.get(`/api/booking/userBooking`, config);
 
+export const updateBookingStatusApi = (data) =>
+  Api.put(`/api/booking/status`, data, config);
+
 export const cancelBookingApi = (id) => {
   return axios.put(`/api/booking/cancel/${id}`, config);
 };
