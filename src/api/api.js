@@ -155,3 +155,9 @@ export const getFeedbackApi = () =>
 // =================== Payment ======================
 export const initializeKhaltiPaymentApi = (data) =>
   Api.post('/api/payment/initialize_khalti', data, jsonConfig);
+
+export const verifyKhaltiPaymentApi = (data) =>
+  Api.get(
+    `/api/payment/complete_khalti?pidx=${data.pidx}&amount=${data.amount}&purchase_order_id=${data.purchase_order_id}`,
+    config,
+  );
