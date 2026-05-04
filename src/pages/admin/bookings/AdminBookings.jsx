@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   FaCalendarAlt,
   FaClock,
@@ -17,7 +17,7 @@ const AdminBookings = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({
-    key: 'bookingDate',
+    key: 'bookingTime',
     direction: 'descending',
   });
 
@@ -42,6 +42,11 @@ const AdminBookings = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  const formatTime = (dateString) => {
+    const options = { hour: '2-digit', minute: '2-digit', hour12: true };
+    return new Date(dateString).toLocaleTimeString(undefined, options);
+  };
+
   const sortedBookings = useMemo(() => {
     let sortableItems = [...bookings];
     if (sortConfig.key) {
@@ -54,8 +59,9 @@ const AdminBookings = () => {
           aValue = a.status;
           bValue = b.status;
         } else {
-          aValue = new Date(a[sortConfig.key]);
-          bValue = new Date(b[sortConfig.key]);
+          // Use bookingTime for date sorting
+          aValue = new Date(a.bookingTime);
+          bValue = new Date(b.bookingTime);
         }
         if (aValue < bValue) {
           return sortConfig.direction === 'ascending' ? -1 : 1;
@@ -85,7 +91,7 @@ const AdminBookings = () => {
       (booking.bikeId?.bikeName || '')
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
-      booking.bikeNumber.toLowerCase().includes(searchTerm.toLowerCase())
+      booking.bikeNumber.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -120,9 +126,9 @@ const AdminBookings = () => {
         />
         <div className='tw-flex tw-gap-2'>
           <button
-            onClick={() => requestSort('bookingDate')}
+            onClick={() => requestSort('bookingTime')}
             className={`tw-px-4 tw-py-2 tw-rounded-lg tw-bg-gray-800 tw-text-white tw-border tw-border-gray-700 hover:tw-bg-gray-700 tw-transition-colors ${
-              sortConfig.key === 'bookingDate' ? 'tw-bg-blue-600' : ''
+              sortConfig.key === 'bookingTime' ? 'tw-bg-blue-600' : ''
             }`}>
             Sort by Date <FaSort className='tw-inline' />
           </button>
@@ -181,11 +187,11 @@ const AdminBookings = () => {
                 </div>
                 <div className='tw-flex tw-items-center tw-mb-2'>
                   <FaCalendarAlt className='tw-mr-2 tw-text-yellow-500' />
-                  <p>{formatDate(booking.bookingDate)}</p>
+                  <p>{formatDate(booking.bookingTime)}</p>
                 </div>
                 <div className='tw-flex tw-items-center tw-mb-4'>
                   <FaClock className='tw-mr-2 tw-text-purple-500' />
-                  <p>{booking.bookingTime}</p>
+                  <p>{formatTime(booking.bookingTime)}</p>
                 </div>
                 <div className='tw-flex tw-justify-between tw-items-center'>
                   <span
